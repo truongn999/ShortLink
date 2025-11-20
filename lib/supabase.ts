@@ -1,8 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
 
 // lấy biến môi trường từ Vite
-const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 // fallback nếu không tồn tại env
 const FALLBACK_URL = 'https://vvoqolsipbgjtytzjoah.supabase.co';
