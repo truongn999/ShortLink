@@ -231,58 +231,56 @@ const Links: React.FC = () => {
 
       {/* Create Wizard Modal */}
       <Modal isOpen={isCreateModalOpen} onClose={() => setIsCreateModalOpen(false)} title="Create New Link" maxWidth="max-w-2xl">
-         <div className="p-4">
-            <div className="space-y-4">
-                <div>
-                    <label className="block text-sm font-medium text-neutral-900 dark:text-white mb-2">Destination URL *</label>
-                    <input 
-                        type="url" 
-                        value={newLinkUrl}
-                        onChange={(e) => setNewLinkUrl(e.target.value)}
-                        placeholder="https://example.com/your-affiliate-link" 
-                        className="w-full px-4 py-2.5 border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white rounded-md text-base focus:outline-none focus:ring-2 focus:ring-neutral-900 dark:focus:ring-white focus:border-transparent" 
-                    />
-                </div>
+        <div className="space-y-4">
+            <div>
+                <label className="block text-sm font-medium text-neutral-900 dark:text-white mb-2">Destination URL *</label>
+                <input 
+                    type="url" 
+                    value={newLinkUrl}
+                    onChange={(e) => setNewLinkUrl(e.target.value)}
+                    placeholder="https://example.com/your-affiliate-link" 
+                    className="w-full px-4 py-2.5 border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white rounded-md text-base focus:outline-none focus:ring-2 focus:ring-neutral-900 dark:focus:ring-white focus:border-transparent" 
+                />
+            </div>
 
-                <div>
-                    <label className="block text-sm font-medium text-neutral-900 dark:text-white mb-2">Custom Slug (Optional)</label>
-                    <div className="flex items-center gap-2">
-                        <input 
-                            type="text" 
-                            value={newLinkSlug}
-                            onChange={(e) => setNewLinkSlug(e.target.value)}
-                            placeholder="your-custom-slug" 
-                            className="flex-1 px-4 py-2.5 border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white rounded-md text-base focus:outline-none focus:ring-2 focus:ring-neutral-900 dark:focus:ring-white focus:border-transparent" 
-                        />
-                    </div>
-                    <p className="text-sm text-neutral-500 dark:text-neutral-400 mt-1">Leave blank to auto-generate</p>
-                </div>
-
-                <div>
-                    <label className="block text-sm font-medium text-neutral-900 dark:text-white mb-2">Title (Optional)</label>
+            <div>
+                <label className="block text-sm font-medium text-neutral-900 dark:text-white mb-2">Custom Slug (Optional)</label>
+                <div className="flex items-center gap-2">
                     <input 
                         type="text" 
-                        value={newLinkTitle}
-                        onChange={(e) => setNewLinkTitle(e.target.value)}
-                        placeholder="Internal description" 
-                        className="w-full px-4 py-2.5 border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white rounded-md text-base focus:outline-none focus:ring-2 focus:ring-neutral-900 dark:focus:ring-white focus:border-transparent" 
+                        value={newLinkSlug}
+                        onChange={(e) => setNewLinkSlug(e.target.value)}
+                        placeholder="your-custom-slug" 
+                        className="flex-1 px-4 py-2.5 border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white rounded-md text-base focus:outline-none focus:ring-2 focus:ring-neutral-900 dark:focus:ring-white focus:border-transparent" 
                     />
                 </div>
+                <p className="text-sm text-neutral-500 dark:text-neutral-400 mt-1">Leave blank to auto-generate</p>
             </div>
 
-            <div className="flex items-center justify-end gap-3 mt-6">
-                <button onClick={() => setIsCreateModalOpen(false)} className="px-4 py-2.5 border border-neutral-300 dark:border-neutral-600 text-neutral-900 dark:text-white rounded-md hover:bg-white dark:hover:bg-neutral-700 transition-colors font-medium">
-                    Cancel
-                </button>
-                <button 
-                    onClick={createLink} 
-                    disabled={isCreating || !newLinkUrl}
-                    className="px-4 py-2.5 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 rounded-md hover:bg-neutral-800 dark:hover:bg-neutral-100 transition-colors font-medium disabled:opacity-50"
-                >
-                    {isCreating ? 'Creating...' : 'Create Link'}
-                </button>
+            <div>
+                <label className="block text-sm font-medium text-neutral-900 dark:text-white mb-2">Title (Optional)</label>
+                <input 
+                    type="text" 
+                    value={newLinkTitle}
+                    onChange={(e) => setNewLinkTitle(e.target.value)}
+                    placeholder="Internal description" 
+                    className="w-full px-4 py-2.5 border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white rounded-md text-base focus:outline-none focus:ring-2 focus:ring-neutral-900 dark:focus:ring-white focus:border-transparent" 
+                />
             </div>
-         </div>
+        </div>
+
+        <div className="flex items-center justify-end gap-3 mt-6">
+            <button onClick={() => setIsCreateModalOpen(false)} className="px-4 py-2.5 border border-neutral-300 dark:border-neutral-600 text-neutral-900 dark:text-white rounded-md hover:bg-white dark:hover:bg-neutral-700 transition-colors font-medium">
+                Cancel
+            </button>
+            <button 
+                onClick={createLink} 
+                disabled={isCreating || !newLinkUrl}
+                className="px-4 py-2.5 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 rounded-md hover:bg-neutral-800 dark:hover:bg-neutral-100 transition-colors font-medium disabled:opacity-50"
+            >
+                {isCreating ? 'Creating...' : 'Create Link'}
+            </button>
+        </div>
       </Modal>
     </div>
   );

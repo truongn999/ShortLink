@@ -70,9 +70,9 @@ const LandingPage: React.FC = () => {
 
       if (insertError) throw insertError;
 
-      // Construct the display URL (using current domain or a fixed one)
+      // Construct the display URL (using current domain)
       const domain = window.location.host; 
-      setShortened(`${domain}/#/${slug}`); // Added /#/ hash routing support if needed, or just use slug
+      setShortened(`${domain}/${slug}`); // Removed /#/ to support clean URLs
       
     } catch (err: any) {
       console.error('Error creating link:', err);
@@ -423,4 +423,3 @@ const LandingPage: React.FC = () => {
 };
 
 export default LandingPage;
-    

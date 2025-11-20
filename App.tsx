@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import LandingPage from './pages/LandingPage';
 import Dashboard from './pages/Dashboard';
@@ -13,9 +13,19 @@ import Layout from './components/Layout';
 import RedirectHandler from './pages/RedirectHandler';
 
 const App: React.FC = () => {
+  // Helper to calculate basename for preview environments (e.g. Project IDX, WebContainer)
+  // These environments often serve the app under a UUID subpath.
+  const getBasename = () => {
+    const path = window.location.pathname;
+    // Check if the path starts with a UUID-like segment (8-4-4-4-12 hex characters)
+    const uuidPattern = /^\/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/;
+    const match = path.match(uuidPattern);
+    return match ? `/${match[1]}` : '/';
+  };
+
   return (
     <AuthProvider>
-      <HashRouter>
+      <BrowserRouter basename={getBasename()}>
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<LandingPage />} />
@@ -38,7 +48,7 @@ const App: React.FC = () => {
           {/* Catch-all redirect to home if no short code matches and no other route matches */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-      </HashRouter>
+      </BrowserRouter>
     </AuthProvider>
   );
 };
