@@ -603,7 +603,7 @@ const Settings: React.FC = () => {
                                         curl -X POST https://api.linkshort.vn/v1/links \<br/>
                                         &nbsp;&nbsp;-H "Authorization: Bearer YOUR_API_KEY" \<br/>
                                         &nbsp;&nbsp;-H "Content-Type: application/json" \<br/>
-                                        &nbsp;&nbsp;-d '{"destination": "https://example.com"}'
+                                        &nbsp;&nbsp;-d '{"destination: https://example.com"}'
                                     </code>
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
