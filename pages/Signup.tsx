@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Lock, Eye, EyeOff, User, ArrowRight, AlertCircle } from 'lucide-react';
 import { supabase } from '../lib/supabase';
-
+import { useToast } from '../contexts/ToastContext';
 const Signup: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
@@ -11,6 +11,8 @@ const Signup: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+
+  const { showToast } = useToast();
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,11 +27,11 @@ const Signup: React.FC = () => {
           data: {
             full_name: fullName,
           },
+          emailRedirectTo: 'https://short-link-aff.vercel.app/email-confirmation',
         },
       });
-
       if (error) throw error;
-      navigate('/dashboard');
+      showToast('Check your email for the confirmation link.', 'success');
     } catch (err: any) {
       setError(err.message || 'Failed to sign up');
     } finally {

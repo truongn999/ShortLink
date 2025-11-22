@@ -15,15 +15,13 @@ import {
   TrendingDown,
   ArrowRight,
   Share2,
-  ChevronLeft,
-  ChevronRight,
   SortDesc
 } from 'lucide-react';
 import Modal from '../components/Modal';
 import PageHeader from '../components/PageHeader';
 import StatsCard from '../components/StatsCard';
 import DateRangeFilter from '../components/DateRangeFilter';
-import Pagination from '../components/Pagination';
+import DataTable, { ColumnDef } from '../components/DataTable';
 
 const TopProducts: React.FC = () => {
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
@@ -343,106 +341,108 @@ const TopProducts: React.FC = () => {
       </div>
 
       {/* Products Table */}
-      <div className="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg overflow-hidden">
-          <div className="px-6 py-4 border-b border-neutral-200 dark:border-neutral-700 flex items-center justify-between">
-              <h2 className="font-semibold text-neutral-900 dark:text-white">Top Products</h2>
-              <div className="flex items-center gap-2">
-                  <button className="px-3 py-1.5 text-xs rounded-md border border-neutral-300 dark:border-neutral-600 hover:bg-neutral-50 dark:hover:bg-neutral-700 transition-colors text-neutral-900 dark:text-white flex items-center gap-1">
-                      <SortDesc className="w-3.5 h-3.5" style={{strokeWidth: 1.5}} />
-                      Sắp xếp
-                  </button>
-              </div>
-          </div>
-
-          <div className="overflow-x-auto">
-              <table className="w-full">
-                  <thead className="bg-neutral-50 dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-700">
-                      <tr>
-                          <th className="text-left text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-wide px-6 py-3">Product</th>
-                          <th className="text-left text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-wide px-6 py-3">Platform</th>
-                          <th className="text-left text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-wide px-6 py-3">Clicks</th>
-                          <th className="text-left text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-wide px-6 py-3">Conversion</th>
-                          <th className="text-left text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-wide px-6 py-3">Revenue</th>
-                          <th className="text-left text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-wide px-6 py-3">Commission</th>
-                          <th className="text-left text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-wide px-6 py-3">Trend</th>
-                          <th className="text-right text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-wide px-6 py-3">Actions</th>
-                      </tr>
-                  </thead>
-                  <tbody className="divide-y divide-neutral-200 dark:divide-neutral-700 bg-white dark:bg-neutral-800">
-                      {products.map((product) => (
-                          <tr key={product.id} className="hover:bg-neutral-50 dark:hover:bg-neutral-700 transition-colors">
-                              <td className="px-6 py-4">
-                                  <div className="flex items-center gap-3">
-                                      <img src={product.image} className="w-12 h-12 rounded-md object-cover" alt="Product" />
-                                      <div className="flex-1 min-w-0">
-                                          <div className="text-base font-medium text-neutral-900 dark:text-white truncate">{product.name}</div>
-                                          <div className="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">{product.category}</div>
-                                      </div>
-                                  </div>
-                              </td>
-                              <td className="px-6 py-4">
-                                  <div className="flex items-center gap-2">
-                                      <div className={`w-5 h-5 rounded flex items-center justify-center ${
-                                          product.platformColor === 'orange' ? 'bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400' :
-                                          product.platformColor === 'blue' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' :
-                                          'bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400'
-                                      }`}>
-                                          <span className="text-xs font-bold">{product.platformCode}</span>
-                                      </div>
-                                      <span className="text-sm text-neutral-600 dark:text-neutral-400">{product.platform}</span>
-                                  </div>
-                              </td>
-                              <td className="px-6 py-4">
-                                  <div className="flex items-center gap-2">
-                                      <span className="text-base font-semibold text-neutral-900 dark:text-white">{product.clicks}</span>
-                                      <span className={`text-xs flex items-center gap-0.5 ${product.clickTrendUp ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
-                                          {product.clickTrendUp ? <TrendingUp className="w-3 h-3" style={{strokeWidth: 1.5}} /> : <TrendingDown className="w-3 h-3" style={{strokeWidth: 1.5}} />}
-                                          {product.clickTrend.replace(/[+-]/, '')}
-                                      </span>
-                                  </div>
-                              </td>
-                              <td className="px-6 py-4">
-                                  <div className="flex items-center gap-2">
-                                      <span className="text-base font-medium text-neutral-900 dark:text-white">{product.conversion}</span>
-                                      <span className={`text-xs flex items-center gap-0.5 ${product.convTrendUp ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
-                                          {product.convTrendUp ? <TrendingUp className="w-3 h-3" style={{strokeWidth: 1.5}} /> : <TrendingDown className="w-3 h-3" style={{strokeWidth: 1.5}} />}
-                                          {product.convTrend.replace(/[+-]/, '')}
-                                      </span>
-                                  </div>
-                              </td>
-                              <td className="px-6 py-4">
-                                  <span className="text-base font-medium text-neutral-900 dark:text-white">{product.revenue}</span>
-                              </td>
-                              <td className="px-6 py-4">
-                                  <span className="text-base font-semibold text-neutral-900 dark:text-white">{product.commission}</span>
-                              </td>
-                              <td className="px-6 py-4">
-                                  <div className="flex items-center gap-1 h-8">
-                                      {product.trend.map((h, i) => (
-                                          <div key={i} className={`w-1 rounded ${i === 4 ? 'bg-green-600 dark:bg-green-500' : 'bg-neutral-300 dark:bg-neutral-600'}`} style={{height: `${h}%`}}></div>
-                                      ))}
-                                  </div>
-                              </td>
-                              <td className="px-6 py-4">
-                                  <div className="flex items-center justify-end gap-1">
-                                      <button onClick={() => handleProductClick(product)} className="text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors p-1.5 hover:bg-neutral-100 dark:hover:bg-neutral-700 rounded">
-                                          <BarChart2 className="w-4 h-4" style={{strokeWidth: 1.5}} />
-                                      </button>
-                                      <button onClick={() => handleGenerateLink(product)} className="text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors p-1.5 hover:bg-neutral-100 dark:hover:bg-neutral-700 rounded">
-                                          <LinkIcon className="w-4 h-4" style={{strokeWidth: 1.5}} />
-                                      </button>
-                                      <button className="text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors p-1.5 hover:bg-neutral-100 dark:hover:bg-neutral-700 rounded">
-                                          <QrCode className="w-4 h-4" style={{strokeWidth: 1.5}} />
-                                      </button>
-                                  </div>
-                              </td>
-                          </tr>
+      <div className="mb-8">
+          <DataTable 
+            title="Top Products"
+            data={products}
+            columns={[
+              {
+                header: 'Product',
+                cell: (product) => (
+                  <div className="flex items-center gap-3">
+                      <img src={product.image} className="w-12 h-12 rounded-md object-cover" alt="Product" />
+                      <div className="flex-1 min-w-0">
+                          <div className="text-base font-medium text-neutral-900 dark:text-white truncate">{product.name}</div>
+                          <div className="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">{product.category}</div>
+                      </div>
+                  </div>
+                )
+              },
+              {
+                header: 'Platform',
+                cell: (product) => (
+                  <div className="flex items-center gap-2">
+                      <div className={`w-5 h-5 rounded flex items-center justify-center ${
+                          product.platformColor === 'orange' ? 'bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400' :
+                          product.platformColor === 'blue' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' :
+                          'bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400'
+                      }`}>
+                          <span className="text-xs font-bold">{product.platformCode}</span>
+                      </div>
+                      <span className="text-sm text-neutral-600 dark:text-neutral-400">{product.platform}</span>
+                  </div>
+                )
+              },
+              {
+                header: 'Clicks',
+                accessorKey: 'clicks',
+                cell: (product) => (
+                  <div className="flex items-center gap-2">
+                      <span className="text-base font-semibold text-neutral-900 dark:text-white">{product.clicks}</span>
+                      <span className={`text-xs flex items-center gap-0.5 ${product.clickTrendUp ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
+                          {product.clickTrendUp ? <TrendingUp className="w-3 h-3" style={{strokeWidth: 1.5}} /> : <TrendingDown className="w-3 h-3" style={{strokeWidth: 1.5}} />}
+                          {product.clickTrend.replace(/[+-]/, '')}
+                      </span>
+                  </div>
+                )
+              },
+              {
+                header: 'Conversion',
+                accessorKey: 'conversion',
+                cell: (product) => (
+                  <div className="flex items-center gap-2">
+                      <span className="text-base font-medium text-neutral-900 dark:text-white">{product.conversion}</span>
+                      <span className={`text-xs flex items-center gap-0.5 ${product.convTrendUp ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
+                          {product.convTrendUp ? <TrendingUp className="w-3 h-3" style={{strokeWidth: 1.5}} /> : <TrendingDown className="w-3 h-3" style={{strokeWidth: 1.5}} />}
+                          {product.convTrend.replace(/[+-]/, '')}
+                      </span>
+                  </div>
+                )
+              },
+              {
+                header: 'Revenue',
+                accessorKey: 'revenue',
+                cell: (product) => <span className="text-base font-medium text-neutral-900 dark:text-white">{product.revenue}</span>
+              },
+              {
+                header: 'Commission',
+                accessorKey: 'commission',
+                cell: (product) => <span className="text-base font-semibold text-neutral-900 dark:text-white">{product.commission}</span>
+              },
+              {
+                header: 'Trend',
+                cell: (product) => (
+                  <div className="flex items-center gap-1 h-8">
+                      {product.trend.map((h: number, i: number) => (
+                          <div key={i} className={`w-1 rounded ${i === 4 ? 'bg-green-600 dark:bg-green-500' : 'bg-neutral-300 dark:bg-neutral-600'}`} style={{height: `${h}%`}}></div>
                       ))}
-                  </tbody>
-              </table>
-          </div>
-
-          <Pagination showingText="Hiển thị 5 trong 2,847 products" />
+                  </div>
+                )
+              },
+              {
+                header: 'Actions',
+                cell: (product) => (
+                  <div className="flex items-center justify-end gap-1">
+                      <button onClick={(e) => { e.stopPropagation(); handleProductClick(product); }} className="text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors p-1.5 hover:bg-neutral-100 dark:hover:bg-neutral-700 rounded">
+                          <BarChart2 className="w-4 h-4" style={{strokeWidth: 1.5}} />
+                      </button>
+                      <button onClick={(e) => { e.stopPropagation(); handleGenerateLink(product); }} className="text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors p-1.5 hover:bg-neutral-100 dark:hover:bg-neutral-700 rounded">
+                          <LinkIcon className="w-4 h-4" style={{strokeWidth: 1.5}} />
+                      </button>
+                      <button className="text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors p-1.5 hover:bg-neutral-100 dark:hover:bg-neutral-700 rounded">
+                          <QrCode className="w-4 h-4" style={{strokeWidth: 1.5}} />
+                      </button>
+                  </div>
+                )
+              }
+            ]}
+            renderHeaderActions={() => (
+              <button className="px-3 py-1.5 text-xs rounded-md border border-neutral-300 dark:border-neutral-600 hover:bg-neutral-50 dark:hover:bg-neutral-700 transition-colors text-neutral-900 dark:text-white flex items-center gap-1">
+                  <SortDesc className="w-3.5 h-3.5" style={{strokeWidth: 1.5}} />
+                  Sắp xếp
+              </button>
+            )}
+          />
       </div>
 
       {/* Product Detail Modal */}

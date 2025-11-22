@@ -1,5 +1,14 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
-  ]
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
+  ],
+  "regions": [
+    "all"
+  ],
+  "experimental": {
+    "ipAddress": true
+  }
 }

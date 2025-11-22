@@ -25,6 +25,7 @@ import {
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
+import AdsBanner from '../components/AdsBanner';
 
 const LandingPage: React.FC = () => {
   const { user } = useAuth();
@@ -134,7 +135,7 @@ const LandingPage: React.FC = () => {
               ) : (
                 <>
                     <Link to="/login" className="text-sm text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white transition-colors px-4 py-2">Login</Link>
-                    <Link to="/dashboard" className="text-sm bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 px-4 py-2 rounded-md hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors font-medium">Get Started</Link>
+                    <Link to="/signup" className="text-sm bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 px-4 py-2 rounded-md hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors font-medium">Get Started</Link>
                 </>
               )}
             </div>
@@ -144,7 +145,7 @@ const LandingPage: React.FC = () => {
 
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-24">
         <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-3xl sm:text-6xl font-bold tracking-tight text-neutral-900 dark:text-white mb-6">
+          <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-neutral-900 dark:text-white mb-6">
             Shorten your links.<br />Track performance.
           </h1>
           <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-12 max-w-2xl mx-auto">
@@ -205,6 +206,14 @@ const LandingPage: React.FC = () => {
                 )}
               </div>
             )}
+          </div>
+
+          <div className="mt-6 max-w-2xl mx-auto">
+              <AdsBanner 
+                size="responsive" 
+                className="w-full h-20 sm:h-24 shadow-sm" 
+                label="Sponsored"
+              />
           </div>
 
           <div className="mt-8 flex items-center justify-center gap-6 text-sm text-neutral-500 dark:text-neutral-400">

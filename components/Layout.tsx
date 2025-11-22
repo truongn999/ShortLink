@@ -31,15 +31,16 @@ const Layout: React.FC = () => {
   });
   
   const { user, signOut } = useAuth();
+  const { isPro } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
   const navItems = [
     { path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { path: '/analytics', label: 'Analytics', icon: BarChart3 },
-    { path: '/top-products', label: 'Top Products', icon: ShoppingBag },
+    // { path: '/top-products', label: 'Top Products', icon: ShoppingBag },
     { path: '/links', label: 'Links', icon: LinkIcon },
-    { path: '/settings', label: 'Settings', icon: Settings },
+    // { path: '/settings', label: 'Settings', icon: Settings },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -140,7 +141,7 @@ const Layout: React.FC = () => {
                     />
                     <div className="hidden md:block text-left">
                     <div className="text-sm font-medium text-neutral-900 dark:text-white max-w-[100px] truncate">{user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'User'}</div>
-                    <div className="text-xs text-neutral-500 dark:text-neutral-400">Free Plan</div>
+                    <div className="text-xs text-neutral-500 dark:text-neutral-400">{isPro ? 'Pro Plan' : 'Free Plan'}</div>
                     </div>
                     <ChevronDown className="w-4 h-4 text-neutral-600 dark:text-neutral-300" strokeWidth={1.5} />
                 </button>

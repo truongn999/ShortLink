@@ -6,7 +6,6 @@ import {
   MousePointerClick, 
   TrendingUp, 
   MapPin, 
-  Search,
   ExternalLink
 } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
@@ -14,6 +13,10 @@ import { useNavigate } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
 import StatsCard from '../components/StatsCard';
 import DateRangeFilter from '../components/DateRangeFilter';
+import CreateLinkModal from '../components/CreateLinkModal';
+import Modal from '../components/Modal';
+import ShortLinkResult from '../components/ShortLinkResult';
+import DataTable from '../components/DataTable';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -28,6 +31,11 @@ const Dashboard: React.FC = () => {
   });
   const [topLinks, setTopLinks] = useState<any[]>([]);
   const [chartData, setChartData] = useState<any[]>([]);
+  
+  // Create Link State
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [createdLink, setCreatedLink] = useState<any | null>(null);
+  const [isResultModalOpen, setIsResultModalOpen] = useState(false);
   
   // Date Filter State (Default to last 7 days)
   const [dateFilter, setDateFilter] = useState(() => {
@@ -63,9 +71,6 @@ const Dashboard: React.FC = () => {
           .lte('created_at', endDateIso);
 
         // Stats 2: Active Links created in this period
-        // Note: This interprets "Active Links" as "Links created in this range that are currently active".
-        // If you want "All active links regardless of creation date", remove the date filter here.
-        // Based on "Filter logic", usually users expect the metric to reflect the date range.
         const { count: activeLinksCount } = await supabase
           .from('links')
           .select('*', { count: 'exact', head: true })
@@ -75,8 +80,6 @@ const Dashboard: React.FC = () => {
           .lte('created_at', endDateIso);
 
         // Stats 3: Total Clicks in this period
-        // We MUST query the `clicks` table to get accurate counts for the specific date range.
-        // We assume a join or checking link ownership via inner join on links table
         const { count: clicksCount } = await supabase
             .from('clicks')
             .select('id, links!inner(user_id)', { count: 'exact', head: true })
@@ -137,8 +140,6 @@ const Dashboard: React.FC = () => {
         // Aggregate clicks
         if (clicksHistory) {
             clicksHistory.forEach(click => {
-                // Local time conversion might be needed depending on requirement, sticking to UTC-ish for simplicity of grouping
-                // or using simple split assuming ISO string.
                 const clickDate = new Date(click.created_at).toISOString().split('T')[0];
                 const index = dailyClicksMap.get(clickDate);
                 if (index !== undefined) {
@@ -171,7 +172,7 @@ const Dashboard: React.FC = () => {
           Export
         </button>
         <button 
-            onClick={() => navigate('/links')}
+            onClick={() => setIsCreateModalOpen(true)}
             className="bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 px-4 py-2.5 rounded-md hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors font-medium flex items-center gap-2"
         >
           <Plus className="w-5 h-5" strokeWidth={1.5} />
@@ -315,71 +316,78 @@ const Dashboard: React.FC = () => {
       </div>
 
       {/* Link Performance Table */}
-      <div className="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg overflow-hidden">
-        <div className="px-6 py-4 border-b border-neutral-200 dark:border-neutral-700 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <h2 className="font-semibold text-neutral-900 dark:text-white">Quản lý Link</h2>
-            <div className="flex items-center gap-3">
-                <div className="relative">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" strokeWidth={1.5} />
-                    <input 
-                      type="text" 
-                      placeholder="Tìm kiếm links..." 
-                      className="pl-10 pr-4 py-2 border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-800 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-neutral-900 dark:focus:ring-white focus:border-transparent w-full sm:w-64 text-neutral-900 dark:text-white placeholder-neutral-500 dark:placeholder-neutral-400" 
-                    />
+      <div className="mb-8">
+        <DataTable 
+          title="Quản lý Link"
+          data={topLinks}
+          columns={[
+            {
+              header: 'Short Code',
+              cell: (link) => (
+                <div className="flex items-center gap-2">
+                    <span className="text-base font-medium text-neutral-900 dark:text-white">{link.short_code}</span>
+                    <button className="text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 transition-colors">
+                        <ExternalLink className="w-4 h-4" strokeWidth={1.5} />
+                    </button>
                 </div>
-            </div>
-        </div>
-        
-        <div className="overflow-x-auto">
-            <table className="w-full">
-                <thead className="bg-neutral-50 dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-700">
-                    <tr>
-                        <th className="text-left text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-wide px-6 py-3">Short Code</th>
-                        <th className="text-left text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-wide px-6 py-3">Destination</th>
-                        <th className="text-left text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-wide px-6 py-3">Clicks</th>
-                        <th className="text-left text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-wide px-6 py-3">Created</th>
-                        <th className="text-left text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-wide px-6 py-3">Status</th>
-                    </tr>
-                </thead>
-                <tbody className="divide-y divide-neutral-200 dark:divide-neutral-700 bg-white dark:bg-neutral-800">
-                    {loading ? (
-                        <tr><td colSpan={5} className="text-center py-8 text-neutral-500">Đang tải...</td></tr>
-                    ) : topLinks.length === 0 ? (
-                        <tr><td colSpan={5} className="text-center py-8 text-neutral-500">Không có link nào</td></tr>
-                    ) : (
-                        topLinks.map((link) => (
-                            <tr key={link.id} className="hover:bg-neutral-50 dark:hover:bg-neutral-700 transition-colors">
-                                <td className="px-6 py-4">
-                                    <div className="flex items-center gap-2">
-                                        <span className="text-base font-medium text-neutral-900 dark:text-white">{link.short_code}</span>
-                                        <button className="text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 transition-colors">
-                                            <ExternalLink className="w-4 h-4" strokeWidth={1.5} />
-                                        </button>
-                                    </div>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <div className="max-w-xs">
-                                        <div className="truncate text-base text-neutral-900 dark:text-white">{link.original_url}</div>
-                                    </div>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <span className="text-base font-medium text-neutral-900 dark:text-white">{link.clicks}</span>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <span className="text-base text-neutral-600 dark:text-neutral-400">{new Date(link.created_at).toLocaleDateString()}</span>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${link.is_active ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400' : 'bg-gray-100 text-gray-800'}`}>
-                                        {link.is_active ? 'Active' : 'Inactive'}
-                                    </span>
-                                </td>
-                            </tr>
-                        ))
-                    )}
-                </tbody>
-            </table>
-        </div>
+              )
+            },
+            {
+              header: 'Destination',
+              cell: (link) => (
+                <div className="max-w-xs">
+                    <div className="truncate text-base text-neutral-900 dark:text-white">{link.original_url}</div>
+                </div>
+              )
+            },
+            {
+              header: 'Clicks',
+              accessorKey: 'clicks',
+              cell: (link) => <span className="text-base font-medium text-neutral-900 dark:text-white">{link.clicks}</span>
+            },
+            {
+              header: 'Created',
+              cell: (link) => <span className="text-base text-neutral-600 dark:text-neutral-400">{new Date(link.created_at).toLocaleDateString()}</span>
+            },
+            {
+              header: 'Status',
+              cell: (link) => (
+                <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${link.is_active ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400' : 'bg-gray-100 text-gray-800'}`}>
+                    {link.is_active ? 'Active' : 'Inactive'}
+                </span>
+              )
+            }
+          ]}
+          enableSearch={false}
+          enablePagination={false}
+        />
       </div>
+
+      {/* Create Link Modal */}
+      <CreateLinkModal 
+        isOpen={isCreateModalOpen} 
+        onClose={() => setIsCreateModalOpen(false)} 
+        onSuccess={(link) => {
+            setIsCreateModalOpen(false);
+            setCreatedLink(link);
+            setIsResultModalOpen(true);
+            // Optionally refresh stats here if needed, but might be overkill for just one link
+        }} 
+      />
+
+      {/* Result Modal */}
+      <Modal 
+        isOpen={isResultModalOpen} 
+        onClose={() => setIsResultModalOpen(false)} 
+        title="Link Created Successfully"
+      >
+        {createdLink && (
+            <ShortLinkResult 
+                shortCode={createdLink.short_code} 
+                originalUrl={createdLink.original_url} 
+            />
+        )}
+      </Modal>
     </div>
   );
 };
