@@ -3,7 +3,8 @@
 
 # Run and deploy your website
 
-This contains everything you need to run your app locally.
+Website ShortLink cho phép người dùng chuyển từ link dài thành short link.
+Nếu người dùng sử dụng tính năng đăng nhập thì có thể tracking số lượng click trên link của mình.
 
 ## Run Locally
 
