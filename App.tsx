@@ -10,6 +10,7 @@ import Settings from './pages/Settings';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Layout from './components/Layout';
+import ProtectedRoute from './components/ProtectedRoute';
 import RedirectHandler from './pages/RedirectHandler';
 import EmailConfirmation from './pages/EmailConfirmation';
 import { ToastProvider } from './contexts/ToastContext';
@@ -37,12 +38,14 @@ const App: React.FC = () => {
             <Route path="/email-confirmation" element={<EmailConfirmation />} />
 
             {/* Protected Routes (Wrapped in Layout) */}
-            <Route element={<Layout />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/analytics" element={<Analytics />} />
-              <Route path="/links" element={<Links />} />
-              <Route path="/top-products" element={<TopProducts />} />
-              <Route path="/settings" element={<Settings />} />
+            <Route element={<ProtectedRoute />}>
+              <Route element={<Layout />}>
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/analytics" element={<Analytics />} />
+                <Route path="/links" element={<Links />} />
+                <Route path="/top-products" element={<TopProducts />} />
+                <Route path="/settings" element={<Settings />} />
+              </Route>
             </Route>
 
             {/* Redirect Route - Handles dynamic short codes */}
