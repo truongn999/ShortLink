@@ -14,6 +14,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import RedirectHandler from './pages/RedirectHandler';
 import EmailConfirmation from './pages/EmailConfirmation';
 import { ToastProvider } from './contexts/ToastContext';
+import { HelmetProvider } from 'react-helmet-async';
 
 const App: React.FC = () => {
   // Helper to calculate basename for preview environments (e.g. Project IDX, WebContainer)
@@ -27,37 +28,39 @@ const App: React.FC = () => {
   };
 
   return (
-    <AuthProvider>
-      <ToastProvider>
-        <BrowserRouter basename={getBasename()}>
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/email-confirmation" element={<EmailConfirmation />} />
+    <HelmetProvider>
+      <AuthProvider>
+        <ToastProvider>
+          <BrowserRouter basename={getBasename()}>
+            <Routes>
+              {/* Public Routes */}
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/email-confirmation" element={<EmailConfirmation />} />
 
-            {/* Protected Routes (Wrapped in Layout) */}
-            <Route element={<ProtectedRoute />}>
-              <Route element={<Layout />}>
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/analytics" element={<Analytics />} />
-                <Route path="/links" element={<Links />} />
-                <Route path="/top-products" element={<TopProducts />} />
-                <Route path="/settings" element={<Settings />} />
+              {/* Protected Routes (Wrapped in Layout) */}
+              <Route element={<ProtectedRoute />}>
+                <Route element={<Layout />}>
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/analytics" element={<Analytics />} />
+                  <Route path="/links" element={<Links />} />
+                  <Route path="/top-products" element={<TopProducts />} />
+                  <Route path="/settings" element={<Settings />} />
+                </Route>
               </Route>
-            </Route>
 
-            {/* Redirect Route - Handles dynamic short codes */}
-            {/* NOTE: Placed at the root level. React Router v6 will try to match specific paths above first. */}
-            <Route path="/:shortCode" element={<RedirectHandler />} />
+              {/* Redirect Route - Handles dynamic short codes */}
+              {/* NOTE: Placed at the root level. React Router v6 will try to match specific paths above first. */}
+              <Route path="/:shortCode" element={<RedirectHandler />} />
 
-            {/* Catch-all redirect to home if no short code matches and no other route matches */}
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </BrowserRouter>
-      </ToastProvider>
-    </AuthProvider>
+              {/* Catch-all redirect to home if no short code matches and no other route matches */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </BrowserRouter>
+        </ToastProvider>
+      </AuthProvider>
+    </HelmetProvider>
   );
 };
 

@@ -26,6 +26,7 @@ import {
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 import AdsBanner from '../components/AdsBanner';
+import SEO from '../components/SEO';
 
 const LandingPage: React.FC = () => {
   const { user } = useAuth();
@@ -111,6 +112,25 @@ const LandingPage: React.FC = () => {
 
   return (
     <div className="bg-white dark:bg-neutral-900 min-h-screen flex flex-col transition-colors duration-300">
+      <SEO 
+        title="LinkShort - Affiliate Link Shortener & Tracking"
+        description="The best free link shortener for affiliate marketers. Track clicks, analyze traffic, and boost your earnings with custom branded links."
+      />
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          "name": "LinkShort",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "Web",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "featureList": "Link Shortening, Analytics, Custom Domains, QR Codes"
+        })}
+      </script>
       <nav className="border-b border-neutral-200 dark:border-neutral-800 sticky top-0 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
@@ -146,10 +166,10 @@ const LandingPage: React.FC = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-24">
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-neutral-900 dark:text-white mb-6">
-            Shorten your links.<br />Track performance.
+            Free Affiliate Link Shortener<br />with Detailed Analytics
           </h1>
           <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-12 max-w-2xl mx-auto">
-            Create professional short links, track detailed analytics, and optimize your marketing campaigns effortlessly.
+            Create professional short links, track detailed analytics, and optimize your affiliate marketing campaigns effortlessly.
           </p>
 
           <div className="bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg p-8 max-w-2xl mx-auto shadow-sm transition-colors">

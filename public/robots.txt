@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://short-link-aff.vercel.app/sitemap.xml
