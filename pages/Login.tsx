@@ -50,7 +50,7 @@ const Login: React.FC = () => {
                 <div className="w-8 h-8 bg-neutral-900 dark:bg-white rounded-lg flex items-center justify-center">
                   <span className="text-white dark:text-neutral-900 font-bold text-lg">L</span>
                 </div>
-                <span className="font-semibold text-xl tracking-tight text-neutral-900 dark:text-white">LinkShort</span>
+                <span className="font-semibold text-xl tracking-tight text-neutral-900 dark:text-white">ShortLink</span>
             </Link>
             <h2 className="mt-6 text-3xl font-bold tracking-tight text-neutral-900 dark:text-white">
               Welcome back
@@ -138,9 +138,9 @@ const Login: React.FC = () => {
                 </div>
 
                 <div className="text-sm">
-                  <a href="#" className="font-medium text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white">
+                  <Link to="/forgot-password" className="font-medium text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white">
                     Forgot password?
-                  </a>
+                  </Link>
                 </div>
               </div>
 
@@ -155,7 +155,7 @@ const Login: React.FC = () => {
               </div>
             </form>
 
-            <div className="mt-6">
+            {/* <div className="mt-6">
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
                   <div className="w-full border-t border-neutral-200 dark:border-neutral-700" />
@@ -196,7 +196,7 @@ const Login: React.FC = () => {
                   </a>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             <div className="mt-8 text-center">
                <p className="text-sm text-neutral-600 dark:text-neutral-400">

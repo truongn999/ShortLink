@@ -136,7 +136,7 @@ const TopProducts: React.FC = () => {
 
   const createLink = () => {
     const randomCode = Math.random().toString(36).substring(2, 8);
-    setGeneratedLink(`linkshort.vn/${randomCode}`);
+    setGeneratedLink(`ShortLink.vn/${randomCode}`);
   };
 
   return (
@@ -573,7 +573,7 @@ const TopProducts: React.FC = () => {
                     <div>
                         <label className="block text-sm font-medium text-neutral-900 dark:text-white mb-2">Custom Slug (tùy chọn)</label>
                         <div className="flex items-center gap-2">
-                            <span className="text-base text-neutral-500 dark:text-neutral-400">linkshort.vn/</span>
+                            <span className="text-base text-neutral-500 dark:text-neutral-400">ShortLink.vn/</span>
                             <input type="text" placeholder="custom-slug" className="flex-1 px-4 py-2.5 border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-white rounded-md text-base focus:outline-none focus:ring-2 focus:ring-neutral-900 dark:focus:ring-white focus:border-transparent" />
                         </div>
                     </div>

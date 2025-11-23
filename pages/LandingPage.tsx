@@ -113,14 +113,14 @@ const LandingPage: React.FC = () => {
   return (
     <div className="bg-white dark:bg-neutral-900 min-h-screen flex flex-col transition-colors duration-300">
       <SEO 
-        title="LinkShort - Affiliate Link Shortener & Tracking"
+        title="ShortLink - Affiliate Link Shortener & Tracking"
         description="The best free link shortener for affiliate marketers. Track clicks, analyze traffic, and boost your earnings with custom branded links."
       />
       <script type="application/ld+json">
         {JSON.stringify({
           "@context": "https://schema.org",
           "@type": "SoftwareApplication",
-          "name": "LinkShort",
+          "name": "ShortLink",
           "applicationCategory": "BusinessApplication",
           "operatingSystem": "Web",
           "offers": {
@@ -139,7 +139,7 @@ const LandingPage: React.FC = () => {
                 <div className="w-8 h-8 bg-neutral-900 dark:bg-white rounded-lg flex items-center justify-center">
                   <span className="text-white dark:text-neutral-900 font-bold text-lg">L</span>
                 </div>
-                LinkShort
+                ShortLink
               </div>
               <div className="hidden md:flex gap-6 text-sm">
                 <a href="#features" className="text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white transition-colors">Features</a>
@@ -393,7 +393,7 @@ const LandingPage: React.FC = () => {
                 <div className="w-8 h-8 bg-neutral-900 dark:bg-white rounded-lg flex items-center justify-center">
                   <span className="text-white dark:text-neutral-900 font-bold text-lg">L</span>
                 </div>
-                <span className="font-semibold text-xl tracking-tight text-neutral-900 dark:text-white">LinkShort</span>
+                <span className="font-semibold text-xl tracking-tight text-neutral-900 dark:text-white">ShortLink</span>
               </Link>
               <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-4">
                 The professional link shortener designed for affiliate marketers and businesses.
@@ -438,7 +438,7 @@ const LandingPage: React.FC = () => {
           
           <div className="border-t border-neutral-200 dark:border-neutral-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-neutral-500 dark:text-neutral-400">
-              © 2024 LinkShort. All rights reserved.
+              © 2024 ShortLink. All rights reserved.
             </p>
             <div className="flex gap-6 text-sm text-neutral-500 dark:text-neutral-400">
               <a href="#" className="hover:text-neutral-900 dark:hover:text-white transition-colors">Privacy Policy</a>

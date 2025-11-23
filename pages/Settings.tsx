@@ -600,7 +600,7 @@ const Settings: React.FC = () => {
                                     <div className="text-sm font-medium text-neutral-900 dark:text-white mb-2">Quick Start</div>
                                     <div className="text-xs text-neutral-600 dark:text-neutral-400 mb-3">Get started with our REST API in minutes</div>
                                     <code className="block text-xs bg-neutral-900 dark:bg-black text-green-400 p-3 rounded font-mono whitespace-pre-wrap">
-                                        curl -X POST https://api.linkshort.vn/v1/links \<br/>
+                                        curl -X POST https://api.ShortLink.vn/v1/links \<br/>
                                         &nbsp;&nbsp;-H "Authorization: Bearer YOUR_API_KEY" \<br/>
                                         &nbsp;&nbsp;-H "Content-Type: application/json" \<br/>
                                         &nbsp;&nbsp;-d '{"destination: https://example.com"}'
@@ -631,7 +631,7 @@ const Settings: React.FC = () => {
                <div className="animate-in fade-in duration-300">
                    <div className="mb-8">
                         <h1 className="text-2xl font-semibold text-neutral-900 dark:text-white">Integrations</h1>
-                        <p className="text-base text-neutral-600 dark:text-neutral-400 mt-1">Connect LinkShort with your favorite tools</p>
+                        <p className="text-base text-neutral-600 dark:text-neutral-400 mt-1">Connect ShortLink with your favorite tools</p>
                     </div>
                     <div className="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg mb-6 transition-colors">
                         <div className="p-6">
@@ -701,7 +701,7 @@ const Settings: React.FC = () => {
                             <div className="space-y-4">
                                 <div>
                                     <label className="block text-sm font-medium text-neutral-900 dark:text-white mb-2">Default Domain</label>
-                                    <select className="w-full px-4 py-2 border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white rounded-md focus:outline-none focus:ring-2 focus:ring-neutral-900 dark:focus:ring-white"><option>linkshort.vn</option><option>custom-domain.com</option></select>
+                                    <select className="w-full px-4 py-2 border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white rounded-md focus:outline-none focus:ring-2 focus:ring-neutral-900 dark:focus:ring-white"><option>ShortLink.vn</option><option>custom-domain.com</option></select>
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium text-neutral-900 dark:text-white mb-2">Timezone</label>
@@ -751,7 +751,7 @@ const Settings: React.FC = () => {
                                     <Toggle checked={true} />
                                 </div>
                                 <div className="flex items-center justify-between">
-                                    <div><div className="text-sm font-medium text-neutral-900 dark:text-white">Share Anonymous Data</div><div className="text-xs text-neutral-500 dark:text-neutral-400">Help improve LinkShort by sharing anonymous usage data</div></div>
+                                    <div><div className="text-sm font-medium text-neutral-900 dark:text-white">Share Anonymous Data</div><div className="text-xs text-neutral-500 dark:text-neutral-400">Help improve ShortLink by sharing anonymous usage data</div></div>
                                     <Toggle checked={false} />
                                 </div>
                             </div>

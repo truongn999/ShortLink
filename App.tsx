@@ -13,6 +13,8 @@ import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
 import RedirectHandler from './pages/RedirectHandler';
 import EmailConfirmation from './pages/EmailConfirmation';
+import ForgotPassword from './pages/ForgotPassword';
+import UpdatePassword from './pages/UpdatePassword';
 import { ToastProvider } from './contexts/ToastContext';
 import { HelmetProvider } from 'react-helmet-async';
 
@@ -37,6 +39,8 @@ const App: React.FC = () => {
               <Route path="/" element={<LandingPage />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/update-password" element={<UpdatePassword />} />
               <Route path="/email-confirmation" element={<EmailConfirmation />} />
 
               {/* Protected Routes (Wrapped in Layout) */}

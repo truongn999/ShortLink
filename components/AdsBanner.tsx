@@ -91,7 +91,7 @@ const AdsBanner: React.FC<AdsBannerProps> = ({
             </div>
           )}
           <span className="text-sm font-medium">
-            {hasError ? 'Ad Failed to Load' : 'Khi bạn thấy quảng cáo ở đây, có nghĩa là tui đang cần tiền để duy trì dịch vụ này 😅'}
+            {hasError ? 'Ad Failed to Load' : 'Khi bạn thấy quảng cáo thật ở đây, có nghĩa là tui đang cần một ít cà phê để duy trì dịch vụ này 😅'}
           </span>
           {destinationUrl && (
             <span className="text-xs mt-1 flex items-center gap-1 opacity-70">

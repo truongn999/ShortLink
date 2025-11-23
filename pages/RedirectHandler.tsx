@@ -140,7 +140,7 @@ const RedirectHandler: React.FC = () => {
             />
           </div>
 
-          <div className="text-xs text-neutral-400">Powered by LinkShort</div>
+          <div className="text-xs text-neutral-400">Powered by ShortLink</div>
         </div>
       </div>
     );

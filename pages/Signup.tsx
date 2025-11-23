@@ -27,7 +27,7 @@ const Signup: React.FC = () => {
           data: {
             full_name: fullName,
           },
-          emailRedirectTo: 'https://short-link-aff.vercel.app/email-confirmation',
+          emailRedirectTo: `${window.location.origin}/email-confirmation`,
         },
       });
       if (error) throw error;
@@ -50,7 +50,7 @@ const Signup: React.FC = () => {
                 </div>
                 <div className="max-w-md">
                     <h2 className="text-4xl font-bold tracking-tight mb-6">Start maximizing your affiliate revenue today.</h2>
-                    <p className="text-lg text-neutral-400">Join thousands of marketers who trust LinkShort to track, optimize, and grow their online presence.</p>
+                    <p className="text-lg text-neutral-400">Join thousands of marketers who trust ShortLink to track, optimize, and grow their online presence.</p>
                 </div>
            </div>
 
@@ -60,7 +60,7 @@ const Signup: React.FC = () => {
                         <svg key={i} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
                     ))}
                 </div>
-                <p className="text-lg font-medium mb-2">"LinkShort has completely transformed how I manage my campaigns. The analytics are incredibly detailed and the interface is a joy to use."</p>
+                <p className="text-lg font-medium mb-2">"ShortLink has completely transformed how I manage my campaigns. The analytics are incredibly detailed and the interface is a joy to use."</p>
                 <div className="flex items-center gap-3 mt-4">
                     <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop" className="w-10 h-10 rounded-full border-2 border-neutral-800" alt="Avatar" />
                     <div>
@@ -81,7 +81,7 @@ const Signup: React.FC = () => {
                     <div className="w-8 h-8 bg-neutral-900 dark:bg-white rounded-lg flex items-center justify-center">
                     <span className="text-white dark:text-neutral-900 font-bold text-lg">L</span>
                     </div>
-                    <span className="font-semibold text-xl tracking-tight text-neutral-900 dark:text-white">LinkShort</span>
+                    <span className="font-semibold text-xl tracking-tight text-neutral-900 dark:text-white">ShortLink</span>
                 </Link>
              </div>
             <h2 className="mt-2 text-3xl font-bold tracking-tight text-neutral-900 dark:text-white">
@@ -211,7 +211,7 @@ const Signup: React.FC = () => {
               </div>
             </form>
 
-            <div className="mt-6">
+            {/* <div className="mt-6">
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
                   <div className="w-full border-t border-neutral-200 dark:border-neutral-700" />
@@ -252,7 +252,7 @@ const Signup: React.FC = () => {
                   </a>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             <div className="mt-8 text-center">
                <p className="text-sm text-neutral-600 dark:text-neutral-400">

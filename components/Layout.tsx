@@ -93,7 +93,7 @@ const Layout: React.FC = () => {
                 <div className="w-8 h-8 bg-neutral-900 dark:bg-white rounded-lg flex items-center justify-center">
                   <span className="text-white dark:text-neutral-900 font-bold text-lg">L</span>
                 </div>
-                LinkShort
+                ShortLink
               </Link>
 
               {/* Desktop Nav */}

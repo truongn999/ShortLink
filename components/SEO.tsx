@@ -13,7 +13,7 @@ interface SEOProps {
 const SEO: React.FC<SEOProps> = ({ 
   title, 
   description, 
-  name = 'LinkShort', 
+  name = 'ShortLink', 
   type = 'website',
   image = '/og-image.png', // Default image (needs to be added to public)
   url
