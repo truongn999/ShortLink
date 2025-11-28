@@ -12,7 +12,8 @@ import {
   X,
   Moon,
   Sun,
-  LogOut
+  LogOut,
+  BookOpen
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -30,8 +31,7 @@ const Layout: React.FC = () => {
     return false;
   });
   
-  const { user, signOut } = useAuth();
-  const { isPro } = useAuth();
+  const { user, signOut, isPro, isAdmin } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -42,6 +42,10 @@ const Layout: React.FC = () => {
     { path: '/links', label: 'Links', icon: LinkIcon },
     // { path: '/settings', label: 'Settings', icon: Settings },
   ];
+
+  if (isAdmin) {
+    navItems.push({ path: '/blog', label: 'Blog', icon: BookOpen });
+  }
 
   const isActive = (path: string) => location.pathname === path;
 

@@ -11,10 +11,14 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
+import AdminRoute from './components/AdminRoute';
 import RedirectHandler from './pages/RedirectHandler';
 import EmailConfirmation from './pages/EmailConfirmation';
 import ForgotPassword from './pages/ForgotPassword';
 import UpdatePassword from './pages/UpdatePassword';
+import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
+import AddPost from './pages/AddPost';
 import { ToastProvider } from './contexts/ToastContext';
 import { HelmetProvider } from 'react-helmet-async';
 
@@ -42,6 +46,18 @@ const App: React.FC = () => {
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/update-password" element={<UpdatePassword />} />
               <Route path="/email-confirmation" element={<EmailConfirmation />} />
+              
+              {/* Public Blog Routes */}
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
+
+              {/* Admin Routes */}
+              <Route element={<AdminRoute />}>
+                <Route element={<Layout />}>
+                  <Route path="/blog/new" element={<AddPost />} />
+                  <Route path="/blog/edit/:slug" element={<AddPost />} />
+                </Route>
+              </Route>
 
               {/* Protected Routes (Wrapped in Layout) */}
               <Route element={<ProtectedRoute />}>

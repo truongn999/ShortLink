@@ -7,6 +7,7 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   isPro: boolean | null; // null = đang xác thực
+  isAdmin: boolean;
   signOut: () => Promise<void>;
 }
 
@@ -15,6 +16,7 @@ const AuthContext = createContext<AuthContextType>({
   user: null,
   loading: true,
   isPro: null,
+  isAdmin: false,
   signOut: async () => {},
 });
 
@@ -23,22 +25,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [isPro, setIsPro] = useState<boolean | null>(null);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
-  const fetchPlan = async (userId: string) => {
+  const fetchProfile = async (userId: string) => {
     const { data, error } = await supabase
       .from('user_profiles')
-      .select('plan_type, plan_active_until')
+      .select('plan_type, plan_active_until, role')
       .eq('id', userId)
       .single();
 
     if (!error && data) {
+      // Check Pro status
       const active =
         data.plan_type === 'pro' &&
         data.plan_active_until &&
         new Date(data.plan_active_until) > new Date();
       setIsPro(active);
+
+      // Check Admin status
+      setIsAdmin(data.role === 'admin');
     } else {
       setIsPro(false);
+      setIsAdmin(false);
     }
   };
 
@@ -46,16 +54,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       setUser(session?.user ?? null);
-      if (session?.user) fetchPlan(session.user.id);
-      else setIsPro(false);
+      if (session?.user) fetchProfile(session.user.id);
+      else {
+        setIsPro(false);
+        setIsAdmin(false);
+      }
       setLoading(false);
     });
 
     const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
       setUser(session?.user ?? null);
-      if (session?.user) fetchPlan(session.user.id);
-      else setIsPro(false);
+      if (session?.user) fetchProfile(session.user.id);
+      else {
+        setIsPro(false);
+        setIsAdmin(false);
+      }
       setLoading(false);
     });
 
@@ -67,9 +81,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setSession(null);
     setUser(null);
     setIsPro(false);
+    setIsAdmin(false);
   };
 
-  const value = { session, user, loading, isPro, signOut };
+  const value = { session, user, loading, isPro, isAdmin, signOut };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 

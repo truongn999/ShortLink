@@ -145,6 +145,7 @@ const LandingPage: React.FC = () => {
                 <a href="#features" className="text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white transition-colors">Features</a>
                 <a href="#dashboard-preview" className="text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white transition-colors">Dashboard</a>
                 <a href="#pricing" className="text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white transition-colors">Pricing</a>
+                <Link to="/blog" className="text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white transition-colors">Blog</Link>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -418,7 +419,7 @@ const LandingPage: React.FC = () => {
             <div>
               <h3 className="font-semibold text-neutral-900 dark:text-white mb-4">Resources</h3>
               <ul className="space-y-2 text-sm text-neutral-600 dark:text-neutral-400">
-                <li><a href="#" className="hover:text-neutral-900 dark:hover:text-white transition-colors">Blog</a></li>
+                <li><Link to="/blog" className="hover:text-neutral-900 dark:hover:text-white transition-colors">Blog</Link></li>
                 <li><a href="#" className="hover:text-neutral-900 dark:hover:text-white transition-colors">Help Center</a></li>
                 <li><a href="#" className="hover:text-neutral-900 dark:hover:text-white transition-colors">Developer Docs</a></li>
                 <li><a href="#" className="hover:text-neutral-900 dark:hover:text-white transition-colors">Status</a></li>
