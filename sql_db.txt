@@ -1,0 +1,72 @@
+-- WARNING: This schema is for context only and is not meant to be run.
+-- Table order and constraints may not be valid for execution.
+
+CREATE TABLE public.clicks (
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  link_id uuid NOT NULL,
+  ip_address inet,
+  user_agent text,
+  referer text,
+  country text,
+  city text,
+  device text,
+  browser text,
+  os text,
+  viewport_width integer,
+  viewport_height integer,
+  created_at timestamp with time zone DEFAULT now(),
+  CONSTRAINT clicks_pkey PRIMARY KEY (id),
+  CONSTRAINT clicks_link_id_fkey FOREIGN KEY (link_id) REFERENCES public.links(id)
+);
+CREATE TABLE public.links (
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  user_id uuid,
+  original_url text NOT NULL,
+  short_code text NOT NULL UNIQUE,
+  title text,
+  description text,
+  custom_domain text,
+  is_active boolean DEFAULT true,
+  password_hash text,
+  expiration_date timestamp with time zone,
+  clicks integer DEFAULT 0,
+  last_clicked_at timestamp with time zone,
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now(),
+  CONSTRAINT links_pkey PRIMARY KEY (id),
+  CONSTRAINT links_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.user_profiles(id)
+);
+CREATE TABLE public.posts (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  title text NOT NULL,
+  slug text NOT NULL UNIQUE,
+  content text NOT NULL,
+  excerpt text,
+  image_url text,
+  category text,
+  author_id uuid,
+  is_published boolean DEFAULT true,
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now(),
+  CONSTRAINT posts_pkey PRIMARY KEY (id),
+  CONSTRAINT posts_author_id_fkey FOREIGN KEY (author_id) REFERENCES auth.users(id)
+);
+CREATE TABLE public.user_profiles (
+  id uuid NOT NULL,
+  email text NOT NULL UNIQUE,
+  name text,
+  avatar_url text,
+  created_at timestamp with time zone DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now(),
+  timezone text DEFAULT 'UTC'::text,
+  language text DEFAULT 'en'::text,
+  plan_type text DEFAULT 'free'::text CHECK (plan_type = ANY (ARRAY['free'::text, 'pro'::text, 'enterprise'::text])),
+  plan_active_until timestamp with time zone,
+  links_created integer DEFAULT 0,
+  total_clicks integer DEFAULT 0,
+  is_active boolean DEFAULT true,
+  email_verified boolean DEFAULT false,
+  role text DEFAULT 'user'::text,
+  CONSTRAINT user_profiles_pkey PRIMARY KEY (id),
+  CONSTRAINT user_profiles_id_fkey FOREIGN KEY (id) REFERENCES auth.users(id)
+);
