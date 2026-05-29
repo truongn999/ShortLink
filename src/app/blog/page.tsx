@@ -5,6 +5,9 @@ import BlogClient from './BlogClient';
 export const metadata: Metadata = {
   title: 'Blog & Thông tin - ShortLink',
   description: 'Khám phá tin tức công nghệ mới nhất, những phát hiện thú vị hàng ngày và hướng dẫn trên Blog ShortLink.',
+  alternates: {
+    canonical: 'https://short-link-aff.vercel.app/blog',
+  },
   openGraph: {
     title: 'Blog & Thông tin - ShortLink',
     description: 'Khám phá tin tức công nghệ mới nhất, những phát hiện thú vị hàng ngày và hướng dẫn trên Blog ShortLink.',

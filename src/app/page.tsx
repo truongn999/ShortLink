@@ -6,15 +6,18 @@ export const metadata: Metadata = {
   title: 'ShortLink - Rút gọn link miễn phí với phân tích chi tiết',
   description: 'Tạo link rút gọn chuyên nghiệp, theo dõi phân tích chi tiết và tối ưu hóa chiến dịch tiếp thị liên kết của bạn với ShortLink. Miễn phí trọn đời, bảo mật cao và thống kê thời gian thực.',
   keywords: ['rút gọn link', 'link rút gọn', 'tiếp thị liên kết', 'theo dõi link', 'phân tích', 'rút gọn link miễn phí', 'slug tùy chỉnh', 'tạo mã qr'],
+  alternates: {
+    canonical: 'https://short-link-aff.vercel.app',
+  },
   authors: [{ name: 'Đội ngũ ShortLink' }],
   openGraph: {
     title: 'ShortLink - Rút gọn link miễn phí cho tiếp thị liên kết',
     description: 'Tối ưu hóa chiến dịch tiếp thị liên kết của bạn với phân tích chi tiết và link rút gọn tùy chỉnh.',
-    url: 'https://shortlink.com', // Replace with actual domain
+    url: 'https://short-link-aff.vercel.app', // Replace with actual domain
     siteName: 'ShortLink',
     images: [
       {
-        url: 'https://shortlink.com/og-image.jpg', // Replace with actual OG image URL
+        url: 'https://short-link-aff.vercel.app/og-image.jpg', // Replace with actual OG image URL
         width: 1200,
         height: 630,
         alt: 'Xem trước Bảng điều khiển ShortLink',
@@ -27,7 +30,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'ShortLink - Rút gọn link miễn phí cho tiếp thị liên kết',
     description: 'Tối ưu hóa chiến dịch tiếp thị liên kết của bạn với phân tích chi tiết và link rút gọn tùy chỉnh.',
-    images: ['https://shortlink.com/twitter-image.jpg'], // Replace with actual Twitter image URL
+    images: ['https://short-link-aff.vercel.app/twitter-image.jpg'], // Replace with actual Twitter image URL
   },
   robots: {
     index: true,

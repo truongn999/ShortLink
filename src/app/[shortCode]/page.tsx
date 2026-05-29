@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: link.title || 'Shared Link - ShortLink',
       description: link.description || `Click to visit ${link.original_url}`,
-      url: `https://shortlink.com/${shortCode}`,
+      url: `https://short-link-aff.vercel.app/${shortCode}`,
       images: link.image ? [{ url: link.image }] : [],
     },
     twitter: {

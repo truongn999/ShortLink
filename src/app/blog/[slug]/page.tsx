@@ -39,6 +39,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: post.title,
     description: post.excerpt || post.content.substring(0, 150),
+    alternates: {
+      canonical: `https://short-link-aff.vercel.app/blog/${slug}`,
+    },
     openGraph: {
       title: post.title,
       description: post.excerpt || post.content.substring(0, 150),
@@ -56,8 +59,35 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     notFound();
   }
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.excerpt || post.content.substring(0, 150),
+    image: post.image_url ? [post.image_url] : [],
+    datePublished: post.created_at,
+    dateModified: post.updated_at || post.created_at,
+    author: {
+      '@type': 'Person',
+      name: 'Admin',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'ShortLink',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://short-link-aff.vercel.app/favicon.svg',
+      },
+    },
+  };
+
   return (
-    <PublicLayout>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <PublicLayout>
       <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
         <Link 
           href="/blog"
@@ -129,5 +159,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         </div>
       </article>
     </PublicLayout>
+    </>
   );
 }
